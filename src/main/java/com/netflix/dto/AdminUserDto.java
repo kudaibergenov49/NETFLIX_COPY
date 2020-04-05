@@ -3,14 +3,10 @@ package com.netflix.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.netflix.model.Status;
 import com.netflix.model.User;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Builder
-@NoArgsConstructor
 public class AdminUserDto {
   private Long id;
   private String username;
@@ -20,24 +16,24 @@ public class AdminUserDto {
   private String status;
 
   public User toUser() {
-    return User.builder()
-        .id(id)
-        .username(username)
-        .firstName(firstName)
-        .lastName(lastName)
-        .email(email)
-        .status(Status.valueOf(status))
-        .build();
+    User user = new User();
+    user.setId(id);
+    user.setUsername(username);
+    user.setFirstName(firstName);
+    user.setLastName(lastName);
+    user.setEmail(email);
+    user.setStatus(Status.valueOf(status));
+    return user;
   }
 
   public static AdminUserDto fromUser(User user) {
-    return AdminUserDto.builder()
-        .id(user.getId())
-        .username(user.getUsername())
-        .lastName(user.getLastName())
-        .firstName(user.getFirstName())
-        .email(user.getEmail())
-        .status(user.getStatus().name())
-        .build();
+    AdminUserDto adminUserDto = new AdminUserDto();
+    adminUserDto.setId(user.getId());
+    adminUserDto.setUsername(user.getUsername());
+    adminUserDto.setFirstName(user.getFirstName());
+    adminUserDto.setLastName(user.getLastName());
+    adminUserDto.setEmail(user.getEmail());
+    adminUserDto.setStatus(user.getStatus().name());
+    return adminUserDto;
   }
 }
