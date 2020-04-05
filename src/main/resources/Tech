@@ -3,9 +3,13 @@ What i want to use:
 project structure: micro services
 Spring : boot, jpa, security
 java version : 8+ (streams, lambda, etc)
-testing: TestNG, Spring test
+testing: TestNG, Spring test, selenide
 migration : Flyway
 libs: Lombok, Apache common libs, Google code style
 message broker: Kafka or RabbitMq
 database : MySQL -> NoSQL
 Front :React
+SVN : Git
+Server : Tomcat
+Must have : !!!!Multithreading(synchronization, java.util.concurrent)
+final tools: K8S, Docker
