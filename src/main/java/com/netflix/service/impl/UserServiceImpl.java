@@ -1,8 +1,8 @@
 package com.netflix.service.impl;
 
-import com.netflix.repository.RoleDao;
-import com.netflix.repository.UserDao;
 import com.netflix.model.User;
+import com.netflix.repository.RoleRepository;
+import com.netflix.repository.UserRepository;
 import com.netflix.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,44 +17,44 @@ import static java.util.Arrays.asList;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-  private final UserDao userDao;
-  private final RoleDao roleDao;
+  private final UserRepository userRepository;
+  private final RoleRepository roleRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  public UserServiceImpl(RoleDao roleDao, UserDao userDao, BCryptPasswordEncoder passwordEncoder) {
-    this.roleDao = roleDao;
-    this.userDao = userDao;
+  public UserServiceImpl(RoleRepository roleRepository, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    this.roleRepository = roleRepository;
+    this.userRepository = userRepository;
     this.bCryptPasswordEncoder = passwordEncoder;
   }
 
   @Override
   public User register(User user) {
     user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-    user.setRoles(asList(roleDao.findByName("ROLE_USER")));
+    user.setRoles(asList(roleRepository.findByName("ROLE_USER")));
     user.setStatus(ACTIVE);
 
-    User registerUser = userDao.save(user);
+    User registerUser = userRepository.save(user);
     log.info("IN register - user: {} successfully registered ", registerUser);
     return registerUser;
   }
 
   @Override
   public List<User> getAll() {
-    List<User> users = userDao.findAll();
+    List<User> users = userRepository.findAll();
     log.info("IN getAll - {} users found", users.size());
     return users;
   }
 
   @Override
   public User findByUserName(String username) {
-    User user = userDao.findByUsername(username);
+    User user = userRepository.findByUsername(username);
     log.info("IN findByUsername - user: {} found by username: {}", user, username);
     return user;
   }
 
   @Override
   public User findById(Long id) {
-    User user = userDao.findById(id).orElse(null);
+    User user = userRepository.findById(id).orElse(null);
     if (user == null) {
       log.warn("IN findById - no user found by id: {}", id);
     } else {
@@ -65,6 +65,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void delete(Long id) {
-    userDao.deleteById(id);
+    userRepository.deleteById(id);
   }
 }

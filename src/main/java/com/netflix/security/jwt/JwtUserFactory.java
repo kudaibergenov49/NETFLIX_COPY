@@ -3,7 +3,6 @@ package com.netflix.security.jwt;
 import com.netflix.model.Role;
 import com.netflix.model.Status;
 import com.netflix.model.User;
-import com.netflix.security.jwt.JwtUser;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,10 +1,10 @@
 package com.netflix.repository;
 
-import com.netflix.model.Role;
+import com.netflix.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleDao extends JpaRepository<Role, Long> {
-  Role findByName(String name);
+public interface UserRepository extends JpaRepository<User, Long> {
+  User findByUsername(String username);
 }
